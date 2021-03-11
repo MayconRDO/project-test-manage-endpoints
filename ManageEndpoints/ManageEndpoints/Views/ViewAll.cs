@@ -1,10 +1,5 @@
-﻿using ManageEndpoints.Models;
-using ManageEndpoints.Services;
+﻿using ManageEndpoints.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageEndpoints.Views
 {
@@ -29,40 +24,7 @@ namespace ManageEndpoints.Views
             RenderLine();
 
             var endpointService = new EndpointService();
-            var endpoints = endpointService.Get();
-
-            // REMOVER DEPOIS
-            //var obj = new Endpoint()
-            //{
-            //    TerminalSerialNumber = "AA",
-            //    IdMeterModel = 16,
-            //    MeterNumber = 1,
-            //    MeterFirmwareVersion = "1.0",
-            //    ChangeState = 0
-            //};
-            //endpoints.Add(obj);
-
-            //obj = new Endpoint()
-            //{
-            //    TerminalSerialNumber = "BB",
-            //    IdMeterModel = 17,
-            //    MeterNumber = 2,
-            //    MeterFirmwareVersion = "2.3",
-            //    ChangeState = 1
-            //};
-            //endpoints.Add(obj);
-
-            //obj = new Endpoint()
-            //{
-            //    TerminalSerialNumber = "CC",
-            //    IdMeterModel = 18,
-            //    MeterNumber = 5,
-            //    MeterFirmwareVersion = "1.9",
-            //    ChangeState = 2
-            //};
-            //endpoints.Add(obj);
-
-            // REMOVER DEPOIS
+            var endpoints = endpointService.Get();            
 
             foreach (var endpoint in endpoints)
             {
@@ -71,8 +33,6 @@ namespace ManageEndpoints.Views
                         , endpoint.MeterNumber.ToString()
                         , endpoint.MeterFirmwareVersion
                         , Helpers.GetChangeStateDescription(endpoint.ChangeState));
-
-                //RenderLine();
             }
 
             if (endpoints.Count == 0)
@@ -113,6 +73,12 @@ namespace ManageEndpoints.Views
             Console.WriteLine(row);
         }
 
+        /// <summary>
+        /// Centralizar textto
+        /// </summary>
+        /// <param name="text">Texto</param>
+        /// <param name="width">Largura</param>
+        /// <returns></returns>
         private static string AlignCenter(string text, int width)
         {
             text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;

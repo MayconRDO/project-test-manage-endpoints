@@ -4,17 +4,17 @@ using System;
 namespace ManageEndpoints.Views
 {
     /// <summary>
-    /// Classe de visualização do objeto Endpoint
+    /// Classe de objetos referente a funcionalidae de update
     /// </summary>
-    public static class View
+    public static class ViewUpdate
     {
         /// <summary>
-        /// Formulário de detalhes do endpoint
+        /// Formulário de update
         /// </summary>
-        public static void FormDetail()
+        public static void FormUpdate()
         {
             Console.WriteLine("\n----------------------------------------------------------------");
-            Console.WriteLine("Gerenciador de Endpoints - Endpoint Cadastrado\r");
+            Console.WriteLine("Gerenciador de Endpoints - Update\r");
             Console.WriteLine("----------------------------------------------------------------\n\n");
 
             Console.Write("Informe o número de série do terminal: ");
@@ -33,6 +33,35 @@ namespace ManageEndpoints.Views
                 Console.WriteLine($"\tNúmero do medidor: {endpoint.MeterNumber}");
                 Console.WriteLine($"\tVersão do firmware do medidor: {endpoint.MeterFirmwareVersion}");
                 Console.WriteLine($"\tMudança de estado: {Helpers.GetChangeStateDescription(endpoint.ChangeState)}");
+
+                Console.WriteLine("\nSelecione o novo estado:\n");
+                Console.WriteLine("\t0 - Desconectado");
+                Console.WriteLine("\t1 - Conectado");
+                Console.WriteLine("\t2 - Armado\n");
+
+                Console.Write("Informe aqui o código do estado desejado: ");
+                endpoint.ChangeState = Helpers.ValidateNumber();
+
+                if (endpoint.ChangeState > 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n\n################################################################");
+                    Console.WriteLine("Não foi possível realizar o update, revise os campos abaixo:\r");
+                    Console.WriteLine("################################################################");
+                    Console.WriteLine("\n\t* Mudança de estado");
+                    FormUpdate();
+                }
+                else
+                {
+                    endpointService.Save(endpoint);
+
+                    Console.Clear();
+                    Console.WriteLine("\n\n################################################################");
+                    Console.WriteLine("Update realizado com sucesso\r");
+                    Console.WriteLine("################################################################");
+                    ViewMenu.FormMenu();
+                }
+
             }
             else
             {

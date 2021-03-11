@@ -1,11 +1,8 @@
 ﻿using ManageEndpoints.Models;
 using ManageEndpoints.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageEndpoints.Services
 {
@@ -41,14 +38,24 @@ namespace ManageEndpoints.Services
         }
 
         /// <summary>
-        /// Salvar o objeto Endpoint na memória
+        /// Cadastrar/Alterar o objeto Endpoint na memória
         /// </summary>
         /// <param name="endpoint">Endpoint</param>
-        public void Insert(Endpoint endpoint)
+        public void Save(Endpoint endpoint)
         {
             ObjectCache cache = MemoryCache.Default;
             CacheItemPolicy policy = new CacheItemPolicy();
             cache.Set(endpoint.TerminalSerialNumber, endpoint, policy);
+        }
+
+        /// <summary>
+        /// Excluir objeto Endpoint da memória
+        /// </summary>
+        /// <param name="endpoint"></param>
+        public void Delete(Endpoint endpoint)
+        {
+            ObjectCache cache = MemoryCache.Default;
+            cache.Remove(endpoint.TerminalSerialNumber);
         }
     }
 }

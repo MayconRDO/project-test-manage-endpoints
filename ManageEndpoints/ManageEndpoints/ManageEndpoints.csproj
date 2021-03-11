@@ -51,9 +51,11 @@
     <Compile Include="Services\EndpointService.cs" />
     <Compile Include="Services\Interfaces\IEndpointService.cs" />
     <Compile Include="Views\View.cs" />
+    <Compile Include="Views\ViewDelete.cs" />
     <Compile Include="Views\ViewInsert.cs" />
     <Compile Include="Views\ViewAll.cs" />
     <Compile Include="Views\ViewMenu.cs" />
+    <Compile Include="Views\ViewUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

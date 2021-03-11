@@ -15,10 +15,10 @@ namespace ManageEndpoints.Services.Interfaces
         List<Endpoint> Get();
 
         /// <summary>
-        /// Cadastrar o endpoint em memória
+        /// Cadastrar/Alterar o objeto Endpoint na memória
         /// </summary>
         /// <param name="endpoint"></param>
-        void Insert(Endpoint endpoint);
+        void Save(Endpoint endpoint);
 
         /// <summary>
         /// Obter endpoint por número de série
@@ -26,5 +26,11 @@ namespace ManageEndpoints.Services.Interfaces
         /// <param name="terminalSerialNumber">Número de série</param>
         /// <returns>Objeto Endpoint</returns>
         Endpoint Get(string terminalSerialNumber);
+
+        /// <summary>
+        /// Excluir objeto Endpoint da memória
+        /// </summary>
+        /// <param name="endpoint"></param>
+        void Delete(Endpoint endpoint);
     }
 }

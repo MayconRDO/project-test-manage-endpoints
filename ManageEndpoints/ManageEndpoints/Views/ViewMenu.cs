@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManageEndpoints.Views
 {
@@ -33,10 +29,12 @@ namespace ManageEndpoints.Views
                     ViewInsert.FormInsert();
                     break;
                 case "2":
-                    Console.WriteLine($"Editar");
+                    Console.Clear();
+                    ViewUpdate.FormUpdate();
                     break;
                 case "3":
-                    Console.WriteLine($"Excluir");
+                    Console.Clear();
+                    ViewDelete.FormDelete();
                     break;
                 case "4":
                     Console.Clear();

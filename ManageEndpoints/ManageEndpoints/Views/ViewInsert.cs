@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ManageEndpoints.Models;
 using ManageEndpoints.Services;
 
@@ -69,7 +65,7 @@ namespace ManageEndpoints.Views
                 else
                 {
                     var endpointService = new EndpointService();
-                    endpointService.Insert(newEndpoint);
+                    endpointService.Save(newEndpoint);
 
                     Console.Clear();
                     Console.WriteLine("\n\n################################################################");
