@@ -15,11 +15,25 @@ namespace ManageEndpoints
         /// <param name="args">args</param>
         static void Main(string[] args)
         {
-            Console.WriteLine("\n------------------------");
-            Console.WriteLine("Gerenciador de Endpoints\r");
-            Console.WriteLine("------------------------\n");
+            ViewMenu();
 
-            Console.WriteLine("Escolha uma operação para ser realizada:\n");
+            //var newEndpoint = new Endpoint();
+
+            //Console.Write("\nID do modelo medidor: ");
+            //newEndpoint.IdMeterModel = ValidateNumber();
+
+            //Console.WriteLine($"\n{newEndpoint.IdMeterModel}");
+
+            Console.ReadKey();
+        }
+
+        private static void ViewMenu()
+        {
+            Console.WriteLine("\n----------------------------------------------");
+            Console.WriteLine("Gerenciador de Endpoints\r");
+            Console.WriteLine("----------------------------------------------");
+
+            Console.WriteLine("\nEscolha uma operação para ser realizada:\n");
             Console.WriteLine("\t1 - Cadastrar");
             Console.WriteLine("\t2 - Editar");
             Console.WriteLine("\t3 - Excluir");
@@ -32,7 +46,8 @@ namespace ManageEndpoints
             switch (Console.ReadLine())
             {
                 case "1":
-                    Insert();
+                    Console.Clear();
+                    ViewInsert();
                     break;
                 case "2":
                     Console.WriteLine($"Editar");
@@ -47,49 +62,152 @@ namespace ManageEndpoints
                     Console.WriteLine($"Listar por número de série");
                     break;
                 default:
-                    Console.WriteLine("Operação inválida!");
+                    Console.Clear();
+                    Console.WriteLine("\nOperação inválida!");
+                    ViewMenu();
                     break;
             }
-            // Wait for the user to respond before closing.
-            Console.Write("Press any key to close the Calculator console app...");
-            Console.ReadKey();
         }
 
         /// <summary>
         /// Cadastrar endpoint
         /// </summary>
-        private static void Insert()
+        private static void ViewInsert()
         {
-            Console.Clear();
-            Console.WriteLine("\n--------------------------------------");
-            Console.WriteLine("Gerenciador de Endpoints - Cadastro\r");
-            Console.WriteLine("--------------------------------------");
+            try
+            {
+                //Console.Clear();
+                Console.WriteLine("\n----------------------------------------------");
+                Console.WriteLine("Gerenciador de Endpoints - Cadastro\r");
+                Console.WriteLine("----------------------------------------------");
 
-            var newEndPoint = new Endpoint();
+                var newEndpoint = new Endpoint();
 
-            Console.WriteLine("\nPor favor, preencha abaixo os campos solicitados:");
+                Console.WriteLine("\nPor favor, preencha abaixo os campos solicitados:");
 
-            Console.Write("\nNúmero da série do terminal: ");
-            newEndPoint.TerminalSerialNumber = Console.ReadLine();
+                Console.Write("\nNúmero da série do terminal: ");
+                newEndpoint.TerminalSerialNumber = Console.ReadLine();
 
-            Console.Write("\nID do modelo medidor: ");
-            newEndPoint.IdMeterModel = int.Parse(Console.ReadLine());
+                Console.WriteLine("\nSelecione o modelo do medidor:\n");
 
-            Console.Write("\nNúmero do medidor: ");
-            newEndPoint.MeterNumber = int.Parse(Console.ReadLine());
+                Console.WriteLine("\t16 - NSX1P2W");
+                Console.WriteLine("\t17 - NSX1P3W");
+                Console.WriteLine("\t18 - NSX2P3W");
+                Console.WriteLine("\t19 - NSX3P4W\n");
 
-            Console.Write("\nVersão do firmware do medidor: ");
-            newEndPoint.MeterFirmwareVersion = Console.ReadLine();
+                Console.Write("Informe aqui o código do modelo desejado: ");
+                newEndpoint.IdMeterModel = ValidateNumber();
 
-            Console.Write("\nMudança de estado: ");
-            newEndPoint.ChangeState = int.Parse(Console.ReadLine());
+                Console.Write("\n\nNúmero do medidor: ");
+                newEndpoint.MeterNumber = ValidateNumber();
 
-            Validate(newEndPoint);
+                Console.Write("\n\nVersão do firmware do medidor: ");
+                newEndpoint.MeterFirmwareVersion = Console.ReadLine();
+
+                Console.WriteLine("\nSelecione o estado:\n");
+                Console.WriteLine("\t0 - Desconectado");
+                Console.WriteLine("\t1 - Conectado");
+                Console.WriteLine("\t2 - Armado\n");
+
+                Console.Write("Informe aqui o código do estado desejado: ");
+                newEndpoint.ChangeState = ValidateNumber();
+
+                var message = Validate(newEndpoint);
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n\nNão foi possível realizar o cadastro, revise os campos abaixo:");
+                    Console.WriteLine(message);
+                    ViewInsert();
+                }
+                else
+                {
+                    Console.WriteLine("\n\nFazer o insert aqui\n");
+                }
+
+                Console.WriteLine($"\n{newEndpoint}");
+                Console.ReadKey();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\nOcorreu um erro no cadastro: {ex.Message}");
+                ViewMenu();
+            }
         }
 
-        private static string Validate(Endpoint enpoint)
+        /// <summary>
+        /// Validar informações prévias do cadastro
+        /// </summary>
+        /// <param name="enpoint">Objeto Endpoint</param>
+        /// <returns></returns>
+        private static string Validate(Endpoint endpoint)
         {
-            return string.Empty;
+            string message = string.Empty;
+
+            if (string.IsNullOrEmpty(endpoint.TerminalSerialNumber))
+            {
+                message = "\n\t* Número de série do terminal";
+            }
+
+            if (endpoint.IdMeterModel < 16 || endpoint.IdMeterModel > 19)
+            {
+                message += "\n\t* Modelo do medidor";
+            }
+
+            if (endpoint.MeterNumber == 0)
+            {
+                message += "\n\t* Número do medidor";
+            }
+
+            if (string.IsNullOrEmpty(endpoint.MeterFirmwareVersion))
+            {
+                message += "\n\t* Versão do firmware do medidor";
+            }
+
+            if (endpoint.ChangeState > 3)
+            {
+                message += "\n\t* Mudança de estado";
+            }
+
+            return message;
+        }
+
+        /// <summary>
+        /// Permitir input de apenas números inteiros
+        /// </summary>
+        /// <returns></returns>
+        private static int ValidateNumber()
+        {
+            double val = 0;
+            string num = "";
+
+            ConsoleKeyInfo chr;
+
+            do
+            {
+                chr = Console.ReadKey(true);
+
+                if (chr.Key == ConsoleKey.Backspace && num.Length > 0)
+                {
+                    num += chr.KeyChar.ToString().Remove(chr.KeyChar.ToString().Length - 1);
+                    num = num.Substring(0, (num.Length - 1));
+                    Console.Write("\b \b");
+                }
+                else
+                {
+                    bool control = double.TryParse(chr.KeyChar.ToString(), out val);
+                    if (control)
+                    {
+                        num += chr.KeyChar;
+                        Console.Write(chr.KeyChar);
+                    }
+                }
+
+            } while (chr.Key != ConsoleKey.Enter || string.IsNullOrEmpty(num));
+
+            return int.Parse(num);
         }
     }
 }
