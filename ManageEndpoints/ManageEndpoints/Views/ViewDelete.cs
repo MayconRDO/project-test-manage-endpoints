@@ -43,7 +43,7 @@ namespace ManageEndpoints.Views
                 Console.Write("\nInforme aqui o código da opção desejada: ");
                 var option = Console.ReadLine();
 
-                if (option.Equals("1") || option.Equals("2"))
+                if (option.Equals("1"))
                 {
                     _endpointService.Delete(endpoint);
 
@@ -51,6 +51,11 @@ namespace ManageEndpoints.Views
                     Console.WriteLine("\n\n################################################################");
                     Console.WriteLine("Registro excluído com sucesso\r");
                     Console.WriteLine("################################################################");
+                    ViewMenu.FormMenu();
+                }
+                else if (option.Equals("2"))
+                {
+                    Console.Clear();
                     ViewMenu.FormMenu();
                 }
                 else

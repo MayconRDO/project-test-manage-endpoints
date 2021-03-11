@@ -19,6 +19,7 @@ namespace ManageEndpoints.Views
             Console.WriteLine("\t3 - Excluir");
             Console.WriteLine("\t4 - Listar todos");
             Console.WriteLine("\t5 - Listar por número de série");
+            Console.WriteLine("\t6 - Sair");
 
             Console.Write("\nInforme o número referente a operação desejada: ");
 
@@ -44,6 +45,10 @@ namespace ManageEndpoints.Views
                     Console.Clear();
                     View.FormDetail();
                     break;
+                case "6":
+                    Console.Clear();
+                    ViewExit.FormExit();
+                    break;
                 default:
                     Console.Clear();
                     Console.WriteLine("\n######################################################");
@@ -53,5 +58,6 @@ namespace ManageEndpoints.Views
                     break;
             }
         }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ManageEndpoints.Services;
 using ManageEndpoints.Services.Interfaces;
 using System;
+using System.Linq;
 
 namespace ManageEndpoints.Views
 {
@@ -25,7 +26,7 @@ namespace ManageEndpoints.Views
             RenderRow("Num. Série do terminal", "Modelo do medidor", "Número do medidor", "Versão firmware", "Estado");
             RenderLine();
 
-            var endpoints = _endpointService.Get();            
+            var endpoints = _endpointService.Get().OrderBy(x => x.TerminalSerialNumber);            
 
             foreach (var endpoint in endpoints)
             {
@@ -36,7 +37,7 @@ namespace ManageEndpoints.Views
                         , Helpers.GetChangeStateDescription(endpoint.ChangeState));
             }
 
-            if (endpoints.Count == 0)
+            if (endpoints.Count() == 0)
             {
                 Console.WriteLine("\rNão existem dados para apresentar!");
             }
