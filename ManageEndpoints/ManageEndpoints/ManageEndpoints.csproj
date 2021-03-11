@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\EnumChangeState.cs" />
+    <Compile Include="Enums\EnumMeterModel.cs" />
     <Compile Include="Utils\Helpers.cs" />
     <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Program.cs" />
