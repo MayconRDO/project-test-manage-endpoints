@@ -1,4 +1,5 @@
 ﻿using ManageEndpoints.Services;
+using ManageEndpoints.Services.Interfaces;
 using System;
 
 namespace ManageEndpoints.Views
@@ -9,6 +10,7 @@ namespace ManageEndpoints.Views
     public static class ViewAll
     {
         static int tableWidth = 115;
+        private static readonly IEndpointService _endpointService = new EndpointService();
 
         /// <summary>
         /// Forulários de visualização de todos os cadastros
@@ -23,8 +25,7 @@ namespace ManageEndpoints.Views
             RenderRow("Num. Série do terminal", "Modelo do medidor", "Número do medidor", "Versão firmware", "Estado");
             RenderLine();
 
-            var endpointService = new EndpointService();
-            var endpoints = endpointService.Get();            
+            var endpoints = _endpointService.Get();            
 
             foreach (var endpoint in endpoints)
             {

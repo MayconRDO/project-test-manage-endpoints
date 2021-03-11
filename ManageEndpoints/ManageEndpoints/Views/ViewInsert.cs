@@ -1,6 +1,7 @@
 ﻿using System;
 using ManageEndpoints.Models;
 using ManageEndpoints.Services;
+using ManageEndpoints.Services.Interfaces;
 
 namespace ManageEndpoints.Views
 {
@@ -9,6 +10,9 @@ namespace ManageEndpoints.Views
     /// </summary>
     public static class ViewInsert
     {
+
+        private static readonly IEndpointService _endpointService = new EndpointService();
+
         /// <summary>
         /// Visualização do formulário de cadastro
         /// </summary>
@@ -64,8 +68,8 @@ namespace ManageEndpoints.Views
                 }
                 else
                 {
-                    var endpointService = new EndpointService();
-                    endpointService.Save(newEndpoint);
+                    //var endpointService = new EndpointService();
+                    _endpointService.Save(newEndpoint);
 
                     Console.Clear();
                     Console.WriteLine("\n\n################################################################");
@@ -100,8 +104,7 @@ namespace ManageEndpoints.Views
             }
             else
             {
-                var endpointService = new EndpointService();
-                var endpointCache = endpointService.Get(endpoint.TerminalSerialNumber);
+                var endpointCache = _endpointService.Get(endpoint.TerminalSerialNumber);
 
                 if (endpointCache != null)
                 {

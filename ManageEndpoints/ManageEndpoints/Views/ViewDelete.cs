@@ -1,4 +1,5 @@
 ﻿using ManageEndpoints.Services;
+using ManageEndpoints.Services.Interfaces;
 using System;
 
 namespace ManageEndpoints.Views
@@ -8,6 +9,8 @@ namespace ManageEndpoints.Views
     /// </summary>
     public static class ViewDelete
     {
+        private static readonly IEndpointService _endpointService = new EndpointService();
+
         /// <summary>
         /// Formulário de Delete
         /// </summary>
@@ -19,10 +22,9 @@ namespace ManageEndpoints.Views
 
             Console.Write("Informe aqui o número de série do terminal que deseja excluir: ");
 
-            var endpointService = new EndpointService();
             var idTerminalSerialNumber = Console.ReadLine();
 
-            var endpoint = endpointService.Get(idTerminalSerialNumber);
+            var endpoint = _endpointService.Get(idTerminalSerialNumber);
 
             if (endpoint != null)
             {
@@ -43,7 +45,7 @@ namespace ManageEndpoints.Views
 
                 if (option.Equals("1") || option.Equals("2"))
                 {
-                    endpointService.Delete(endpoint);
+                    _endpointService.Delete(endpoint);
 
                     Console.Clear();
                     Console.WriteLine("\n\n################################################################");

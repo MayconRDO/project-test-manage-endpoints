@@ -1,4 +1,5 @@
 ﻿using ManageEndpoints.Services;
+using ManageEndpoints.Services.Interfaces;
 using System;
 
 namespace ManageEndpoints.Views
@@ -8,6 +9,8 @@ namespace ManageEndpoints.Views
     /// </summary>
     public static class ViewUpdate
     {
+        private static readonly IEndpointService _endpointService = new EndpointService();
+
         /// <summary>
         /// Formulário de update
         /// </summary>
@@ -19,10 +22,9 @@ namespace ManageEndpoints.Views
 
             Console.Write("Informe o número de série do terminal: ");
 
-            var endpointService = new EndpointService();
             var idTerminalSerialNumber = Console.ReadLine();
 
-            var endpoint = endpointService.Get(idTerminalSerialNumber);
+            var endpoint = _endpointService.Get(idTerminalSerialNumber);
 
             if (endpoint != null)
             {
@@ -53,7 +55,7 @@ namespace ManageEndpoints.Views
                 }
                 else
                 {
-                    endpointService.Save(endpoint);
+                    _endpointService.Save(endpoint);
 
                     Console.Clear();
                     Console.WriteLine("\n\n################################################################");
